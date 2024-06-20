@@ -1,13 +1,15 @@
 import java.util.Scanner;
 
 public class Main {
-    static String inputText;
+
     public static void main(String[] args)
     {
 
         System.out.println(textModifier());
     }
     public static String textModifier() {
+        String inputText;
+
         Scanner input = new Scanner(System.in);
         System.out.print("Enter text: ");
         inputText = input.next();
@@ -15,39 +17,50 @@ public class Main {
 
         String first = inputText.trim().replaceAll(" +", " ");
         StringBuilder second = new StringBuilder();
-        String third = "";
+        StringBuilder end = new StringBuilder();
         int count = 0;
+        if (!first.contains("-")){
         for (int i = 0; i < first.length(); i++) {
             if (first.charAt(i) == '-') {
                 // swap = swap.substring(0, i) + swap.substring(i + 1);
-                String afterSwap;
 
-                char rightChar = first.charAt(i + 1);
-                String leftPart = first.substring(0, i - 1);
-                String rightPart = first.substring(i + 1);
-                afterSwap = leftPart + rightChar + rightPart;
+
+               // char rightChar = first.charAt(i + 1);
+                String leftPart = first.substring(0, i - 1)+first.charAt(i+1);
+                String rightPart = first.substring(i - 1,i)+first.substring(i + 2);
+                String afterSwap = leftPart + rightPart;
                 second.append(afterSwap);
             }
-        }
 
+
+            }
+        }
+        else {
+            second.append(first);
+        }
 //////////////////////////////////////////////////////////////
-        second = new StringBuilder(second.toString().replace("+", "!"));
+
+        String second2 = second.toString().replace("+", "!");
 
 /////////////////////////////////////////////////////////////////
-        for (int i = 0; i < second.length(); i++) {
-            if ((int) second.charAt(i) == 9) {
+        for (int i = 0; i < second2.length(); i++) {
+            if (second2.charAt(i) == 9) {
                 i++;
                 count ++;
             }
-            else if ((int) second.charAt(i) == 0){
+            else if (second2.charAt(i) == 0){
                 i++;
                 count++;
             }
 
         }
-        third = third.replaceAll("[09]","");
-        third = third + " " + count;
-////////////////////////////////////////////////////////////////
-        return third;
+
+        String third = second2.replaceAll("[09]","");
+        end.append(String.valueOf(third));
+        end.append(" ");
+        if (count>0)
+        {end.append(count);}
+
+        return String.valueOf(end);
     }
 }
